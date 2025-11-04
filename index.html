@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="eye.png" />
+  <title>Why are you here Why are you here Why are you here Why are you here Why are you here</title>
+  <style>
+    :root {
+      --bg1: #ff00cc;
+      --bg2: #00ff99;
+      --accent1: #ffff00;
+      --accent2: #00ffff;
+      --text: #0a0a0a;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html, body {
+      height:100%;
+      width:100%;
+      overflow:hidden;
+      background:radial-gradient(circle,var(--bg1),var(--bg2));
+      font-family:'Comic Sans MS',cursive;
+      color:var(--text);
+    }
+    .container {
+      position:relative;
+      height:100%;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      z-index:10;
+    }
+    h1 {
+      font-size:clamp(3rem,8vw,8rem);
+      text-transform:uppercase;
+      animation:colorShift 2s infinite linear;
+      letter-spacing:4px;
+    }
+    h1 .highlight {
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      -webkit-background-clip:text;
+      color:transparent;
+      animation:rainbow 1s infinite linear;
+    }
+    p {
+      font-size:1.6rem;
+      margin:1rem auto;
+      max-width:700px;
+      animation:shake 0.5s infinite;
+    }
+    .btn {
+      padding:1rem 2rem;
+      font-size:1.5rem;
+      border:none;
+      border-radius:1rem;
+      cursor:pointer;
+      background:linear-gradient(90deg,var(--accent1),var(--accent2));
+      animation:pulse 0.5s infinite alternate;
+    }
+
+    @keyframes colorShift {
+      0%{color:#ff00cc}25%{color:#ffff00}50%{color:#00ff99}75%{color:#00ffff}100%{color:#ff00cc}
+    }
+    @keyframes pulse {
+      0%{transform:scale(1)}100%{transform:scale(1.2) rotate(10deg)}
+    }
+    @keyframes rainbow {
+      0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}
+    }
+    @keyframes shake {
+      0%,100%{transform:rotate(1deg);}50%{transform:rotate(-1deg);}
+    }
+
+    .sprite {
+      position:absolute;
+      width:100px;
+      height:100px;
+      border-radius:50%;
+      animation:spinCrazy 1s linear infinite;
+      pointer-events:none;
+      mix-blend-mode:difference;
+    }
+    @keyframes spinCrazy {
+      0%{transform:rotate(0deg)translate(0,0)}
+      50%{transform:rotate(180deg)translate(400px,400px)}
+      100%{transform:rotate(360deg)translate(0,0)}
+    }
+
+    .blob {
+      position:absolute;
+      width:600px;
+      height:600px;
+      border-radius:50%;
+      filter:blur(120px);
+      mix-blend-mode:screen;
+      opacity:0.7;
+      animation:blobFloat 6s ease-in-out infinite;
+    }
+    .blob.one {
+      background:var(--accent1);
+      top:-15%;
+      left:-10%;
+    }
+    .blob.two {
+      background:var(--accent2);
+      bottom:-15%;
+      right:-10%;
+      animation-duration:8s;
+    }
+    @keyframes blobFloat {
+      0%{transform:translateY(0)}50%{transform:translateY(-60px) scale(1.2)}100%{transform:translateY(0)}
+    }
+
+    /* Enlarged media image */
+    #mediaImg {
+      position:absolute;
+      display:none;
+      width:700px;  /* big for visibility */
+      height:auto;
+      z-index:20;
+    }
+  </style>
+</head>
+<body>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+  <div class="container">
+    <h1>GO TO THE <span class="highlight">SERVER</span></h1>
+    <p>THIS DOMAIN WASNT FOR A WEBSITE IT WAS MEANT FOR THE MC SERVER GET OUT</p>
+    <button class="btn" id="enterBtn">JOIN THE SERVER</button>
+  </div>
+
+  <img id="mediaImg" src="media.png" alt="media image" />
+
+  <script>
+    const spriteImages = ['1.webp', '2.webp', '3.webp'];
+
+    function spawnSprite() {
+      const img = document.createElement('img');
+      img.src = spriteImages[Math.floor(Math.random() * spriteImages.length)];
+      img.className = 'sprite';
+      img.style.left = Math.random() * 100 + '%';
+      img.style.top = Math.random() * 100 + '%';
+      img.style.animationDuration = (0.5 + Math.random() * 0.5) + 's';
+      document.body.appendChild(img);
+      setTimeout(() => img.remove(), 3000);
+    }
+
+    setInterval(spawnSprite, 200);
+
+    // Redirect button
+    document.getElementById('enterBtn').addEventListener('click', () => {
+      window.location.href = "https://flockawebsite.pages.dev"; // Replace with your link
+    });
+
+    // Media image spawn logic
+    function showMedia() {
+      const img = document.getElementById('mediaImg');
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const imgWidth = 700;
+      const imgHeight = 388;
+
+      const x = Math.random() * (vw - imgWidth);
+      const yMin = -imgHeight / 2;
+      const yMax = vh - imgHeight; // stays fully on-screen at bottom
+      const y = Math.random() * (yMax - yMin) + yMin;
+
+      img.style.left = `${x}px`;
+      img.style.top = `${y}px`;
+      img.style.display = 'block';
+    }
+
+    setTimeout(showMedia, 4000);
+  </script>
+</body>
+</html>
